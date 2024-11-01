@@ -1,4 +1,4 @@
-package com.example.taxidolphin
+package com.example.taxi
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
