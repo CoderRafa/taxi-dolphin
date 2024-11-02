@@ -1,0 +1,6 @@
+spring:
+    application:
+        name: taxi-dolphin
+//TODO: А где настройки для подключенмя к БД?
+// Вот так создайте новую БД для для вашего сервиса
+// docker run -d -e POSTGRES_PASSWORD=db_pass -e POSTGRES_USER=db --name dophin-db -p 5436:5432 postgres:12.2-alpine
