@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    username: ${POSTGRES_USER:db}
+    password: ${POSTGRES_PASSWORD:db_pass}
+    url: jdbc:postgresql://${POSTGRES_HOSTNAME:localhost}:${POSTGRES_PORT:5435}/${POSTGRES_DB:db}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.show_sql: true
+      org.hibernate.envers:
+        revision_field_name: REVISION_ID
+        revision_type_field_name: REVISION_TYPE
+    hibernate.ddl-auto: validate
+    show-sql: true
+
+
+

@@ -1,0 +1,591 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1730569494931-1
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: account_seq
+            startValue: 1
+  - changeSet:
+      id: 1730569494931-2
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: car_seq
+            startValue: 1
+  - changeSet:
+      id: 1730569494931-3
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: combined_rating_seq
+            startValue: 1
+  - changeSet:
+      id: 1730569494931-4
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: location_seq
+            startValue: 1
+  - changeSet:
+      id: 1730569494931-5
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: money_account_seq
+            startValue: 1
+  - changeSet:
+      id: 1730569494931-6
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: payment_seq
+            startValue: 1
+  - changeSet:
+      id: 1730569494931-7
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: rating_seq
+            startValue: 1
+  - changeSet:
+      id: 1730569494931-8
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: trip_seq
+            startValue: 1
+  - changeSet:
+      id: 1730569494931-9
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: user_seq
+            startValue: 1
+  - changeSet:
+      id: 1730569494931-10
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_account
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: registration_date
+                  type: DATE
+              - column:
+                  name: type
+                  type: SMALLINT
+              - column:
+                  name: rating
+                  type: DOUBLE
+            tableName: account
+  - changeSet:
+      id: 1730569494931-11
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_car
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: make
+                  type: VARCHAR(255)
+              - column:
+                  name: model
+                  type: VARCHAR(255)
+              - column:
+                  name: color
+                  type: VARCHAR(255)
+              - column:
+                  name: category
+                  type: VARCHAR(255)
+              - column:
+                  name: licence_plate_number
+                  type: VARCHAR(10)
+              - column:
+                  name: location_entity_id
+                  type: BIGINT
+              - column:
+                  name: driver_entity_id
+                  type: BIGINT
+            tableName: car
+  - changeSet:
+      id: 1730569494931-12
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_combined_rating
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: number_of_trips
+                  type: INT
+              - column:
+                  name: number_of_fives
+                  type: INT
+              - column:
+                  name: number_of_fourss
+                  type: INT
+              - column:
+                  name: number_of_threes
+                  type: INT
+              - column:
+                  name: number_of_twos
+                  type: INT
+              - column:
+                  name: number_of_ones
+                  type: INT
+            tableName: combined_rating
+  - changeSet:
+      id: 1730569494931-13
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_driver
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: experience
+                  type: INT
+              - column:
+                  name: average_monthly_number_of_passengers
+                  type: DOUBLE
+              - column:
+                  name: last_month_work_hours
+                  type: DOUBLE
+              - column:
+                  name: combined_rating_entity_id
+                  type: BIGINT
+            tableName: driver
+  - changeSet:
+      id: 1730569494931-14
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_location
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: latitude
+                  type: DOUBLE
+              - column:
+                  name: longitude
+                  type: DOUBLE
+              - column:
+                  name: time
+                  type: DATETIME
+            tableName: location
+  - changeSet:
+      id: 1730569494931-15
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_money_account
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: account_number
+                  type: VARCHAR(255)
+              - column:
+                  name: currency
+                  type: VARCHAR(255)
+              - column:
+                  name: balance
+                  type: DOUBLE
+              - column:
+                  name: account_entity_id
+                  type: BIGINT
+            tableName: money_account
+  - changeSet:
+      id: 1730569494931-16
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_passenger
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: miles
+                  type: DOUBLE
+              - column:
+                  name: average_tip
+                  type: DOUBLE
+              - column:
+                  name: general_comment
+                  type: VARCHAR(255)
+              - column:
+                  name: favorite_radio_station
+                  type: VARCHAR(255)
+              - column:
+                  name: combined_rating_entity_id
+                  type: BIGINT
+            tableName: passenger
+  - changeSet:
+      id: 1730569494931-17
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_payment
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: amount
+                  type: DOUBLE
+              - column:
+                  name: created_date
+                  type: DATETIME
+              - column:
+                  name: confirmed_date
+                  type: DATETIME
+              - column:
+                  name: purpose
+                  type: VARCHAR(255)
+              - column:
+                  name: payment_status
+                  type: VARCHAR(255)
+              - column:
+                  name: money_account_entity_id
+                  type: BIGINT
+            tableName: payment
+  - changeSet:
+      id: 1730569494931-18
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_rating
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: by_whom
+                  type: BIGINT
+              - column:
+                  name: for_whom
+                  type: BIGINT
+              - column:
+                  name: given_rating
+                  type: VARCHAR(255)
+              - column:
+                  name: comment
+                  type: VARCHAR(255)
+              - column:
+                  name: trip_entity_id
+                  type: BIGINT
+            tableName: rating
+  - changeSet:
+      id: 1730569494931-19
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_trip
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: start_time
+                  type: TIME
+              - column:
+                  name: finish_time
+                  type: TIME
+              - column:
+                  name: start_point_id
+                  type: BIGINT
+              - column:
+                  name: end_point_id
+                  type: BIGINT
+              - column:
+                  name: trip_status
+                  type: SMALLINT
+              - column:
+                  name: price
+                  type: DOUBLE
+              - column:
+                  name: distance
+                  type: DOUBLE
+              - column:
+                  name: driver_entity_id
+                  type: BIGINT
+              - column:
+                  name: passenger_entity_id
+                  type: BIGINT
+            tableName: trip
+  - changeSet:
+      id: 1730569494931-20
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_user
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: who
+                  type: VARCHAR(50)
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  name: age
+                  type: VARCHAR(255)
+              - column:
+                  name: sex
+                  type: VARCHAR(255)
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: phone_number
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: address
+                  type: VARCHAR(255)
+              - column:
+                  name: avatar_link
+                  type: VARCHAR(255)
+              - column:
+                  name: account_entity_id
+                  type: BIGINT
+            tableName: user
+  - changeSet:
+      id: 1730569494931-21
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: driver_entity_id
+            baseTableName: car
+            constraintName: FK_CAR_ON_DRIVER_ENTITY
+            referencedColumnNames: id
+            referencedTableName: driver
+  - changeSet:
+      id: 1730569494931-22
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: location_entity_id
+            baseTableName: car
+            constraintName: FK_CAR_ON_LOCATION_ENTITY
+            referencedColumnNames: id
+            referencedTableName: location
+  - changeSet:
+      id: 1730569494931-23
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: combined_rating_entity_id
+            baseTableName: driver
+            constraintName: FK_DRIVER_ON_COMBINED_RATING_ENTITY
+            referencedColumnNames: id
+            referencedTableName: combined_rating
+  - changeSet:
+      id: 1730569494931-24
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: id
+            baseTableName: driver
+            constraintName: FK_DRIVER_ON_ID
+            referencedColumnNames: id
+            referencedTableName: user
+  - changeSet:
+      id: 1730569494931-25
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: account_entity_id
+            baseTableName: money_account
+            constraintName: FK_MONEY_ACCOUNT_ON_ACCOUNT_ENTITY
+            referencedColumnNames: id
+            referencedTableName: account
+  - changeSet:
+      id: 1730569494931-26
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: combined_rating_entity_id
+            baseTableName: passenger
+            constraintName: FK_PASSENGER_ON_COMBINED_RATING_ENTITY
+            referencedColumnNames: id
+            referencedTableName: combined_rating
+  - changeSet:
+      id: 1730569494931-27
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: id
+            baseTableName: passenger
+            constraintName: FK_PASSENGER_ON_ID
+            referencedColumnNames: id
+            referencedTableName: user
+  - changeSet:
+      id: 1730569494931-28
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: money_account_entity_id
+            baseTableName: payment
+            constraintName: FK_PAYMENT_ON_MONEY_ACCOUNT_ENTITY
+            referencedColumnNames: id
+            referencedTableName: money_account
+  - changeSet:
+      id: 1730569494931-29
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: trip_entity_id
+            baseTableName: rating
+            constraintName: FK_RATING_ON_TRIP_ENTITY
+            referencedColumnNames: id
+            referencedTableName: trip
+  - changeSet:
+      id: 1730569494931-30
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: driver_entity_id
+            baseTableName: trip
+            constraintName: FK_TRIP_ON_DRIVER_ENTITY
+            referencedColumnNames: id
+            referencedTableName: driver
+  - changeSet:
+      id: 1730569494931-31
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: end_point_id
+            baseTableName: trip
+            constraintName: FK_TRIP_ON_END_POINT
+            referencedColumnNames: id
+            referencedTableName: location
+  - changeSet:
+      id: 1730569494931-32
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: passenger_entity_id
+            baseTableName: trip
+            constraintName: FK_TRIP_ON_PASSENGER_ENTITY
+            referencedColumnNames: id
+            referencedTableName: passenger
+  - changeSet:
+      id: 1730569494931-33
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: start_point_id
+            baseTableName: trip
+            constraintName: FK_TRIP_ON_START_POINT
+            referencedColumnNames: id
+            referencedTableName: location
+  - changeSet:
+      id: 1730569494931-34
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: account_entity_id
+            baseTableName: user
+            constraintName: FK_USER_ON_ACCOUNT_ENTITY
+            referencedColumnNames: id
+            referencedTableName: account
+
