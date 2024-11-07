@@ -13,7 +13,7 @@
   </component>
   <component name="PersistenceUnitSettings">
     <persistence-units>
-      <persistence-unit name="Default">
+      <persistence-unit name="Default" defaultIncludeChangeLogFile="src/main/resources/db/dbchangelog.xml">
         <packages>
           <package value="com.example.taxi" />
         </packages>

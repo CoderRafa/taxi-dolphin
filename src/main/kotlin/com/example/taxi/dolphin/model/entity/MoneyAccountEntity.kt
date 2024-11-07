@@ -28,7 +28,7 @@ open class MoneyAccountEntity {
 
     @ManyToOne(cascade = [CascadeType.REFRESH])
     @JoinColumn(name = "account_entity_id")
-    open lateinit var accountEntity: com.example.taxi.dolphin.model.entity.AccountEntity
+    open lateinit var accountEntity: AccountEntity
 
     final override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.enumerated.AvailabilityStatus
 import jakarta.persistence.*
 
 @Entity
@@ -7,6 +8,9 @@ import jakarta.persistence.*
 @PrimaryKeyJoinColumn(name = "id")
 @DiscriminatorValue("Driver")
 open class DriverEntity : UserEntity() {
+    @Enumerated
+    @Column(name = "availability_status")
+    open var availabilityStatus: AvailabilityStatus = AvailabilityStatus.NOT_AVAILABLE
 
     @Column(name = "experience")
     open var experience: Int? = null
@@ -21,7 +25,7 @@ open class DriverEntity : UserEntity() {
     open var tripEntities: MutableSet<TripEntity> = mutableSetOf()
 
     @OneToMany(mappedBy = "driverEntity", cascade = [CascadeType.ALL], orphanRemoval = true)
-    open var carEntities: MutableSet<com.example.taxi.dolphin.model.entity.CarEntity> = mutableSetOf()
+    open var carEntities: MutableSet<CarEntity> = mutableSetOf()
 
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "combined_rating_entity_id")

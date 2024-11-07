@@ -47,5 +47,5 @@ open class UserEntity {
 
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "account_entity_id")
-    open lateinit var account: com.example.taxi.dolphin.model.entity.AccountEntity
+    open lateinit var account: AccountEntity
 }

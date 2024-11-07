@@ -24,8 +24,8 @@ open class AccountEntity {
     open var rating: Double? = null
 
     @OneToOne(mappedBy = "account", cascade = [CascadeType.ALL], orphanRemoval = true)
-    open lateinit var user: com.example.taxi.dolphin.model.entity.UserEntity
+    open lateinit var user: UserEntity
 
     @OneToMany(mappedBy = "accountEntity", cascade = [CascadeType.ALL], orphanRemoval = true)
-    open var moneyAccountEntities: MutableSet<com.example.taxi.dolphin.model.entity.MoneyAccountEntity> = mutableSetOf()
+    open var moneyAccountEntities: MutableSet<MoneyAccountEntity> = mutableSetOf()
 }

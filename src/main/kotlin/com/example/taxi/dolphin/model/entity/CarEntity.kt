@@ -33,11 +33,11 @@ open class CarEntity {
 
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "location_entity_id")
-    open lateinit var locationEntity: com.example.taxi.dolphin.model.entity.LocationEntity
+    open lateinit var locationEntity: LocationEntity
 
     @ManyToOne(cascade = [CascadeType.REFRESH])
     @JoinColumn(name = "driver_entity_id")
-    open lateinit var driverEntity: com.example.taxi.dolphin.model.entity.DriverEntity
+    open lateinit var driverEntity: DriverEntity
 
     final override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -47,7 +47,7 @@ open class CarEntity {
         val thisEffectiveClass =
             if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass else this.javaClass
         if (thisEffectiveClass != oEffectiveClass) return false
-        other as com.example.taxi.dolphin.model.entity.CarEntity
+        other as CarEntity
 
         return id != null && id == other.id
     }

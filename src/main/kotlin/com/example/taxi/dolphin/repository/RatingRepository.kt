@@ -1,4 +1,4 @@
-package com.example.taxi.dolphin.model.repository
+package com.example.taxi.dolphin.repository
 
 import com.example.taxi.dolphin.model.entity.RatingEntity
 import org.springframework.data.repository.CrudRepository

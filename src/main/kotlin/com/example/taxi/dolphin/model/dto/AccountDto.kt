@@ -13,3 +13,4 @@ data class AccountDto(
     val type: AccountType? = null,
     val rating: Double? = null
 ) : Serializable
+
