@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.TripDto
 import com.example.taxi.dolphin.model.enumerated.TripStatus
 import jakarta.persistence.*
 import org.hibernate.proxy.HibernateProxy
@@ -28,7 +29,7 @@ open class TripEntity {
     @JoinColumn(name = "end_point_id")
     open lateinit var endPoint: LocationEntity
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "trip_status")
     open lateinit var tripStatus: TripStatus
 
@@ -65,3 +66,11 @@ open class TripEntity {
     final override fun hashCode(): Int =
         if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass.hashCode() else javaClass.hashCode()
 }
+
+fun TripEntity.toDto(): TripDto = TripDto(
+    id, startTime, finishTime,
+    startPoint.toDto(), endPoint.toDto(),
+    tripStatus, price, distance,
+    driverEntity.toDto(), ratingEntities.map { it.toDto() },
+    passengerEntity.toDto()
+)

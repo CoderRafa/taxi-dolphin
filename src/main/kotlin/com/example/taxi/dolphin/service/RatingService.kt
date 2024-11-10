@@ -6,6 +6,4 @@ interface RatingService {
 
     fun save(ratingDto: RatingDto): RatingDto
 
-    fun findBy(id: Long): RatingDto
-
 }

@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.LocationDto
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -21,3 +22,7 @@ open class LocationEntity {
     @Column(name = "time")
     open lateinit var time: LocalDateTime
 }
+
+fun LocationEntity.toDto(): LocationDto = LocationDto(
+    id, latitude, longitude, time
+)

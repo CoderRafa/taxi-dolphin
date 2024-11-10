@@ -1,5 +1,7 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.AccountDto
+import com.example.taxi.dolphin.model.dto.UserDto
 import com.example.taxi.dolphin.model.enumerated.AccountType
 import jakarta.persistence.*
 import java.time.LocalDate
@@ -16,7 +18,7 @@ open class AccountEntity {
     @Column(name = "registration_date")
     open lateinit var registrationDate: LocalDate
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
     open lateinit var type: AccountType
 
@@ -29,3 +31,8 @@ open class AccountEntity {
     @OneToMany(mappedBy = "accountEntity", cascade = [CascadeType.ALL], orphanRemoval = true)
     open var moneyAccountEntities: MutableSet<MoneyAccountEntity> = mutableSetOf()
 }
+
+fun AccountEntity.toDto(): AccountDto =
+    AccountDto(id, registrationDate, type, rating,
+        user.toDto(), moneyAccountEntities.map { it.toDto() }.toMutableSet()
+        )

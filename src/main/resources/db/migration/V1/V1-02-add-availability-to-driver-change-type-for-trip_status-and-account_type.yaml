@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: AddAvailabilityToDriverChangeTypeForTripStatusAndAccountType
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: availability_status
+                  type: VARCHAR(255)
+            tableName: driver
+  - changeSet:
+      id: 1730978546106-1
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: trip_status
+            tableName: trip
+  - changeSet:
+      id: 1730978546106-2
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: trip_status
+                  type: VARCHAR(255)
+            tableName: trip
+  - changeSet:
+      id: 1730978546106-3
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: type
+            tableName: account
+  - changeSet:
+      id: 1730978546106-4
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: type
+                  type: VARCHAR(255)
+            tableName: account
+

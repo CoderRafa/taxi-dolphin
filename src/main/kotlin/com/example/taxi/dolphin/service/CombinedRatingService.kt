@@ -7,4 +7,7 @@ interface CombinedRatingService {
     fun save(combinedRatingDto: CombinedRatingDto): CombinedRatingDto
 
     fun editBy(id: Long, combinedRatingDto: CombinedRatingDto): CombinedRatingDto
+
+    fun findBy(id: Long): CombinedRatingDto
+
 }

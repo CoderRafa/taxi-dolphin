@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.PassengerDto
 import jakarta.persistence.*
 
 @Entity
@@ -27,3 +28,12 @@ open class PassengerEntity : UserEntity() {
     @JoinColumn(name = "combined_rating_entity_id")
     open var combinedRatingEntity: CombinedRatingEntity? = null
 }
+
+fun PassengerEntity.toDto(): PassengerDto = PassengerDto(
+    id, firstName, lastName, age,
+    sex, title, phoneNumber, email,
+    address, avatarLink, account.toDto(),
+    miles, averageTip, generalComment,
+    favoriteRadioStation, tripEntities.map { it.toDto() },
+    combinedRatingEntity?.toDto()
+)

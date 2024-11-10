@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.UserDto
 import com.example.taxi.dolphin.model.enumerated.SexType
 import com.example.taxi.dolphin.model.enumerated.Title
 import jakarta.persistence.*
@@ -49,3 +50,9 @@ open class UserEntity {
     @JoinColumn(name = "account_entity_id")
     open lateinit var account: AccountEntity
 }
+
+fun UserEntity.toDto(): UserDto = UserDto(
+    id, firstName, lastName, age,
+    sex, title, phoneNumber, email,
+    address, avatarLink, account.toDto()
+)

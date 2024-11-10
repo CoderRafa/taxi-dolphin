@@ -5,6 +5,5 @@
                    objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
 
     <include file="db/migration/V1/V1-01-init_changelog.yaml"/>
-    <include file="db/migration/V1/V1-02-add-availability-to-driver.yaml"/>
-    <include file="db/migration/V1/V1-03-change-type-of-availability_status.yaml"/>
+    <include file="db/migration/V1/V1-02-add-availability-to-driver-change-type-for-trip_status-and-account_type.yaml"/>
 </databaseChangeLog>

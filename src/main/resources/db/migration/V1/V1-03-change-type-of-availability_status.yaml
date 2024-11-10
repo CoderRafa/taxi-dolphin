@@ -1,9 +1,0 @@
-databaseChangeLog:
-  -  changeSet:
-       id: ChangeDataTypeForAvailabilityStatus
-       author: Rafa
-       changes:
-         -  modifyDataType:
-              columnName: availability_status
-              newDataType: VARCHAR(50)
-              tableName: driver

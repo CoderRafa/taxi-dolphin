@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.RatingDto
 import com.example.taxi.dolphin.model.enumerated.Review
 import jakarta.persistence.*
 import org.hibernate.proxy.HibernateProxy
@@ -46,3 +47,9 @@ open  class RatingEntity {
     final override fun hashCode(): Int =
         if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass.hashCode() else javaClass.hashCode()
 }
+
+fun RatingEntity.toDto(): RatingDto =RatingDto(
+    id, byWhom, forWhom,
+    givenRating, comment,
+    tripEntity.toDto()
+)

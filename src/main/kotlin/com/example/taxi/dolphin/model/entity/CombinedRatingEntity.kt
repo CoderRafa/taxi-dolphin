@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.CombinedRatingDto
 import jakarta.persistence.*
 
 @Entity
@@ -29,3 +30,7 @@ open class CombinedRatingEntity {
     @Column(name = "number_of_ones")
     open var numberOfOnes: Int? = null
 }
+
+fun CombinedRatingEntity.toDto(): CombinedRatingDto = CombinedRatingDto(
+    id, numberOfTrips, numberOfFives, numberOfFours, numberOfThrees, numberOfTwos, numberOfOnes
+)

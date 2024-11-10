@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.MoneyAccountDto
 import com.example.taxi.dolphin.model.enumerated.Currency
 import jakarta.persistence.*
 import org.hibernate.proxy.HibernateProxy
@@ -46,3 +47,9 @@ open class MoneyAccountEntity {
     final override fun hashCode(): Int =
         if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass.hashCode() else javaClass.hashCode()
 }
+
+fun MoneyAccountEntity.toDto(): MoneyAccountDto = MoneyAccountDto(
+    id, accountNumber, currency,
+    balance, paymentEntities.map { it.toDto() }.toMutableSet(),
+    accountEntity.toDto()
+)

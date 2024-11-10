@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.DriverDto
 import com.example.taxi.dolphin.model.enumerated.AvailabilityStatus
 import jakarta.persistence.*
 
@@ -8,7 +9,7 @@ import jakarta.persistence.*
 @PrimaryKeyJoinColumn(name = "id")
 @DiscriminatorValue("Driver")
 open class DriverEntity : UserEntity() {
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "availability_status")
     open var availabilityStatus: AvailabilityStatus = AvailabilityStatus.NOT_AVAILABLE
 
@@ -31,3 +32,13 @@ open class DriverEntity : UserEntity() {
     @JoinColumn(name = "combined_rating_entity_id")
     open var combinedRatingEntity: CombinedRatingEntity? = null
 }
+
+fun DriverEntity.toDto(): DriverDto = DriverDto(
+    id, firstName, lastName, age,
+    sex, title, phoneNumber, email,
+    address, avatarLink, account.toDto(),
+    experience, averageMonthlyNumberOfPassengers,
+    lastMonthWorkHours, tripEntities.map { it.toDto() },
+    carEntities.map { it.toDto() },
+    combinedRatingEntity?.toDto()
+)

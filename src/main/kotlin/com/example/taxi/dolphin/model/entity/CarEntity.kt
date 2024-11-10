@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.CarDto
 import com.example.taxi.dolphin.model.enumerated.CarCategory
 import com.example.taxi.dolphin.model.enumerated.CarColor
 import jakarta.persistence.*
@@ -55,3 +56,9 @@ open class CarEntity {
     final override fun hashCode(): Int =
         if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass.hashCode() else javaClass.hashCode()
 }
+
+fun CarEntity.toDto(): CarDto = CarDto(
+    id, make, model, color,
+    category, licencePlateNumber,
+    locationEntity.toDto(), driverEntity.toDto()
+)
