@@ -21,15 +21,10 @@ data class AccountDto(
 ) : Serializable
 
 fun AccountDto.toEntity(): AccountEntity = AccountEntity().apply {
-    id = this@toEntity.id
-    registrationDate = this@toEntity.registrationDate
-    type = this@toEntity.type
-    rating = this@toEntity.rating
-    user = this@toEntity.user.toEntity()
-    user.account = this
-    moneyAccountEntities = this@toEntity.moneyAccounts.map { it.toEntity() }.toMutableSet()
-    moneyAccountEntities.map { it.accountEntity = this }
+    this.id = this@toEntity.id
+    this.registrationDate = this@toEntity.registrationDate
+    this.type = this@toEntity.type
+    this.rating = this@toEntity.rating
+    this.user = this@toEntity.user.toEntity(this)
+    this.moneyAccountEntities = this@toEntity.moneyAccounts.map { it.toEntity(this) }.toMutableSet()
 }
-
-
-

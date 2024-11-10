@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.dto
 
+import com.example.taxi.dolphin.model.entity.AccountEntity
 import com.example.taxi.dolphin.model.entity.MoneyAccountEntity
 import com.example.taxi.dolphin.model.enumerated.Currency
 import com.fasterxml.jackson.annotation.JsonBackReference
@@ -18,11 +19,11 @@ data class MoneyAccountDto(
     val accountDto: AccountDto
 ) : Serializable
 
-fun MoneyAccountDto.toEntity(): MoneyAccountEntity = MoneyAccountEntity().apply {
-    id = this@toEntity.id
-    accountNumber = this@toEntity.accountNumber
-    currency = this@toEntity.currency
-    balance = this@toEntity.balance
-    paymentEntities = this@toEntity.payments.map { it.toEntity() }.toMutableSet()
-    accountEntity = this@toEntity.accountDto.toEntity()
+fun MoneyAccountDto.toEntity(accountEntity: AccountEntity? = null): MoneyAccountEntity = MoneyAccountEntity().apply {
+    this.id = this@toEntity.id
+    this.accountNumber = this@toEntity.accountNumber
+    this.currency = this@toEntity.currency
+    this.balance = this@toEntity.balance
+    this.paymentEntities = this@toEntity.payments.map { it.toEntity() }.toMutableSet()
+    this.accountEntity = accountEntity ?: this@toEntity.accountDto.toEntity()
 }

@@ -1,10 +1,12 @@
 package com.example.taxi.dolphin.model.dto
 
+import com.example.taxi.dolphin.model.entity.AccountEntity
 import com.example.taxi.dolphin.model.entity.UserEntity
 import com.example.taxi.dolphin.model.enumerated.SexType
 import com.example.taxi.dolphin.model.enumerated.Title
 import com.fasterxml.jackson.annotation.JsonBackReference
 import java.io.Serializable
+import java.lang.RuntimeException
 
 /**
  * DTO for {@link com.example.taxi.dolphin.model.entity.UserEntity}
@@ -21,19 +23,19 @@ open class UserDto(
     val address: String,
     val avatarLink: String,
     @JsonBackReference
-    val accountDto: AccountDto
+    val accountDto: AccountDto? = null
 ) : Serializable
 
-fun UserDto.toEntity(): UserEntity = UserEntity().apply {
-    id = this@toEntity.id
-    firstName = this@toEntity.firstName
-    lastName = this@toEntity.lastName
-    age = this@toEntity.age
-    sex = this@toEntity.sex
-    title = this@toEntity.title
-    phoneNumber = this@toEntity.phoneNumber
-    email = this@toEntity.email
-    address = this@toEntity.address
-    avatarLink  = this@toEntity.avatarLink
-    account = this@toEntity.accountDto.toEntity()
+fun UserDto.toEntity(accountEntity: AccountEntity? = null): UserEntity = UserEntity().apply {
+    this.id = this@toEntity.id
+    this.firstName = this@toEntity.firstName
+    this.lastName = this@toEntity.lastName
+    this.age = this@toEntity.age
+    this.sex = this@toEntity.sex
+    this.title = this@toEntity.title
+    this.phoneNumber = this@toEntity.phoneNumber
+    this.email = this@toEntity.email
+    this.address = this@toEntity.address
+    this.avatarLink  = this@toEntity.avatarLink
+    this.account = accountEntity ?: this@toEntity.accountDto?.toEntity() ?: throw RuntimeException("The account has to be not null")
 }

@@ -1,9 +1,11 @@
 package com.example.taxi.dolphin.model.dto
 
+import com.example.taxi.dolphin.model.entity.AccountEntity
 import com.example.taxi.dolphin.model.entity.PassengerEntity
 import com.example.taxi.dolphin.model.enumerated.SexType
 import com.example.taxi.dolphin.model.enumerated.Title
 import com.fasterxml.jackson.annotation.JsonManagedReference
+import java.lang.RuntimeException
 
 /**
  * DTO for {@link com.example.taxi.dolphin.model.entity.PassengerEntity}
@@ -29,7 +31,7 @@ class PassengerDto(
     val combinedRatingDto: CombinedRatingDto? = null
 ) : UserDto(id, firstName, lastName, age, sex, title, phoneNumber, email, address, avatarLink, accountDto)
 
-fun PassengerDto.toEntity(): PassengerEntity = PassengerEntity().apply {
+fun PassengerDto.toEntity(accountEntity: AccountEntity? = null): PassengerEntity = PassengerEntity().apply {
     id = this@toEntity.id
     firstName = this@toEntity.firstName
     lastName = this@toEntity.lastName
@@ -40,7 +42,7 @@ fun PassengerDto.toEntity(): PassengerEntity = PassengerEntity().apply {
     email = this@toEntity.email
     address = this@toEntity.address
     avatarLink = this@toEntity.avatarLink
-    account = this@toEntity.accountDto.toEntity()
+    account =  accountEntity ?: this@toEntity.accountDto?.toEntity() ?: throw RuntimeException("The account has to be not null")
     miles = this@toEntity.miles
     averageTip = this@toEntity.averageTip
     generalComment = this@toEntity.generalComment

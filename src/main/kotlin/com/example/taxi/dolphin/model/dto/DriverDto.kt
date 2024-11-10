@@ -1,10 +1,12 @@
 package com.example.taxi.dolphin.model.dto
 
+import com.example.taxi.dolphin.model.entity.AccountEntity
 import com.example.taxi.dolphin.model.entity.DriverEntity
 import com.example.taxi.dolphin.model.enumerated.SexType
 import com.example.taxi.dolphin.model.enumerated.Title
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import java.io.Serializable
+import java.lang.RuntimeException
 
 /**
  * DTO for {@link com.example.taxi.dolphin.model.entity.DriverEntity}
@@ -31,7 +33,7 @@ class DriverDto(
     val combinedRatingDto: CombinedRatingDto? = null
 ) : UserDto(id, firstName, lastName, age, sex, title, phoneNumber, email, address, avatarLink, accountDto)
 
-fun DriverDto.toEntity(): DriverEntity = DriverEntity().apply {
+fun DriverDto.toEntity(accountEntity: AccountEntity? = null): DriverEntity = DriverEntity().apply {
     id = this@toEntity.id
     firstName = this@toEntity.firstName
     lastName = this@toEntity.lastName
@@ -42,7 +44,7 @@ fun DriverDto.toEntity(): DriverEntity = DriverEntity().apply {
     email = this@toEntity.email
     address = this@toEntity.address
     avatarLink = this@toEntity.avatarLink
-    account = this@toEntity.accountDto.toEntity()
+    account = accountEntity ?: this@toEntity.accountDto?.toEntity() ?: throw RuntimeException("The account has to be not null")
     experience = this@toEntity.experience
     averageMonthlyNumberOfPassengers = this@toEntity.averageMonthlyNumberOfPassengers
     lastMonthWorkHours = this@toEntity.lastMonthWorkHours
