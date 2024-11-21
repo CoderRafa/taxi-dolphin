@@ -1,6 +1,7 @@
 package com.example.taxi.dolphin.model.dto
 
 import com.example.taxi.dolphin.model.entity.AccountEntity
+import com.example.taxi.dolphin.model.entity.UserEntity
 import com.example.taxi.dolphin.model.enumerated.AccountType
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import java.io.Serializable
@@ -12,12 +13,10 @@ import java.time.LocalDate
 data class AccountDto(
     val id: Long? = null,
     val registrationDate: LocalDate,
-    val type: AccountType,
+    val type: AccountType = AccountType.BASIC,
     val rating: Double? = null,
-    @JsonManagedReference
     val user: UserDto,
-    @JsonManagedReference
-    val moneyAccounts: MutableSet<MoneyAccountDto>
+    val moneyAccounts: MutableSet<MoneyAccountDto> = mutableSetOf()
 ) : Serializable
 
 fun AccountDto.toEntity(): AccountEntity = AccountEntity().apply {

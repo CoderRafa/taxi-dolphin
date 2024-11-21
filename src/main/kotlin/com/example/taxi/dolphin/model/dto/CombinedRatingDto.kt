@@ -30,11 +30,11 @@ fun combinedRating(combinedRatingDto: CombinedRatingDto): Double {
 }
 
 fun CombinedRatingDto.toEntity(): CombinedRatingEntity = CombinedRatingEntity().apply {
-    id = this@toEntity.id
-    numberOfTrips = this@toEntity.numberOfTrips
-    numberOfFives = this@toEntity.numberOfFives
-    numberOfFours = this@toEntity.numberOfFours
-    numberOfThrees = this@toEntity.numberOfThrees
-    numberOfTwos = this@toEntity.numberOfTwos
-    numberOfOnes = this@toEntity.numberOfOnes
+    this.id = this@toEntity.id
+    this.numberOfTrips = this@toEntity.numberOfTrips
+    this.numberOfFives = this@toEntity.numberOfFives
+    this.numberOfFours = this@toEntity.numberOfFours
+    this.numberOfThrees = this@toEntity.numberOfThrees
+    this.numberOfTwos = this@toEntity.numberOfTwos
+    this.numberOfOnes = this@toEntity.numberOfOnes
 }

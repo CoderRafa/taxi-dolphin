@@ -50,6 +50,9 @@ open class TripEntity {
     @JoinColumn(name = "passenger_entity_id")
     open lateinit var passengerEntity: PassengerEntity
 
+    @OneToOne(mappedBy = "tripEntity", cascade = [CascadeType.ALL], orphanRemoval = true)
+    open var paymentEntity: PaymentEntity? = null
+
     final override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null) return false
@@ -72,5 +75,5 @@ fun TripEntity.toDto(): TripDto = TripDto(
     startPoint.toDto(), endPoint.toDto(),
     tripStatus, price, distance,
     driverEntity.toDto(), ratingEntities.map { it.toDto() },
-    passengerEntity.toDto()
+    passengerEntity.toDto(), paymentEntity?.toDto()
 )

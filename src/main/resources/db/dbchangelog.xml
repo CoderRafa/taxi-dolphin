@@ -6,4 +6,6 @@
 
     <include file="db/migration/V1/V1-01-init_changelog.yaml"/>
     <include file="db/migration/V1/V1-02-add-availability-to-driver-change-type-for-trip_status-and-account_type.yaml"/>
+    <include file="/db/migration/V1/V1-03-change-user-age-type-to-int.yaml"/>
+    <include file="/db/migration/V1/V1-04-add-from-and-to-payments-link-trip-to-payment.yaml"/>
 </databaseChangeLog>

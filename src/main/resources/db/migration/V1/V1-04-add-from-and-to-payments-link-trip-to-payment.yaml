@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1732183447386-1
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: from_money_account_entity_id
+                  type: BIGINT
+              - column:
+                  name: to_money_account_entity_id
+                  type: BIGINT
+              - column:
+                  name: trip_entity_id
+                  type: BIGINT
+            tableName: payment
+  - changeSet:
+      id: 1732183447386-4
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: from_money_account_entity_id
+            baseTableName: payment
+            constraintName: FK_PAYMENT_ON_FROM_MONEY_ACCOUNT_ENTITY
+            referencedColumnNames: id
+            referencedTableName: money_account
+  - changeSet:
+      id: 1732183447386-5
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: to_money_account_entity_id
+            baseTableName: payment
+            constraintName: FK_PAYMENT_ON_TO_MONEY_ACCOUNT_ENTITY
+            referencedColumnNames: id
+            referencedTableName: money_account
+  - changeSet:
+      id: 1732183447386-6
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: trip_entity_id
+            baseTableName: payment
+            constraintName: FK_PAYMENT_ON_TRIP_ENTITY
+            referencedColumnNames: id
+            referencedTableName: trip
+  - changeSet:
+      id: 1732183447386-7
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: payment
+            constraintName: fk_payment_on_money_account_entity
+  - changeSet:
+      id: 1732183447386-8
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: money_account_entity_id
+            tableName: payment
+

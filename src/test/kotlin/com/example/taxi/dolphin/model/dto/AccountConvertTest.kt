@@ -25,7 +25,7 @@ class AccountConvertTest {
                 1,
                 "Jon",
                 "Carter",
-                "10",
+                10,
                 SexType.MALE,
                 Title.MR,
                 "+192988384834903",

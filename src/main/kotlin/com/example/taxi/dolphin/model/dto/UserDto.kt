@@ -15,15 +15,14 @@ open class UserDto(
     val id: Long? = null,
     val firstName: String,
     val lastName: String,
-    val age: String,
+    val age: Int,
     val sex: SexType,
     val title: Title,
     val phoneNumber: String,
     val email: String,
     val address: String,
     val avatarLink: String,
-    @JsonBackReference
-    val accountDto: AccountDto? = null
+    val accountDto: AccountDto
 ) : Serializable
 
 fun UserDto.toEntity(accountEntity: AccountEntity? = null): UserEntity = UserEntity().apply {
@@ -37,5 +36,5 @@ fun UserDto.toEntity(accountEntity: AccountEntity? = null): UserEntity = UserEnt
     this.email = this@toEntity.email
     this.address = this@toEntity.address
     this.avatarLink  = this@toEntity.avatarLink
-    this.account = accountEntity ?: this@toEntity.accountDto?.toEntity() ?: throw RuntimeException("The account has to be not null")
+    this.account = accountEntity ?: this@toEntity.accountDto.toEntity()
 }

@@ -32,8 +32,16 @@ open class PaymentEntity {
     open lateinit var paymentStatus: PaymentStatus
 
     @ManyToOne(cascade = [CascadeType.REFRESH])
-    @JoinColumn(name = "money_account_entity_id")
-    open lateinit var moneyAccountEntity: MoneyAccountEntity
+    @JoinColumn(name = "from_money_account_entity_id")
+    open lateinit var from: MoneyAccountEntity
+
+    @ManyToOne(cascade = [CascadeType.REFRESH])
+    @JoinColumn(name = "to_money_account_entity_id")
+    open lateinit var to: MoneyAccountEntity
+
+    @OneToOne(cascade = [CascadeType.REFRESH], orphanRemoval = true)
+    @JoinColumn(name = "trip_entity_id")
+    open lateinit var tripEntity: TripEntity
 
     final override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -54,5 +62,6 @@ open class PaymentEntity {
 
 fun PaymentEntity.toDto():PaymentDto = PaymentDto(
     id, amount, createdDate, confirmedDate,
-    purpose, paymentStatus, moneyAccountEntity.toDto()
+    purpose, paymentStatus, from.toDto(),
+    to.toDto(), tripEntity.toDto()
 )

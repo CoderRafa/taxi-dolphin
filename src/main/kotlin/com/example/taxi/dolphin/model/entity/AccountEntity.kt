@@ -20,7 +20,7 @@ open class AccountEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    open lateinit var type: AccountType
+    open var type: AccountType = AccountType.BASIC
 
     @Column(name = "rating")
     open var rating: Double? = null
@@ -33,6 +33,8 @@ open class AccountEntity {
 }
 
 fun AccountEntity.toDto(): AccountDto =
-    AccountDto(id, registrationDate, type, rating,
-        user.toDto(), moneyAccountEntities.map { it.toDto() }.toMutableSet()
+    AccountDto(
+        id, registrationDate, type, rating,
+        user.toDto(),
+        moneyAccountEntities.map { it.toDto() }.toMutableSet()
         )

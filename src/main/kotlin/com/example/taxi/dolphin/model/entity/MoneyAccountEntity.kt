@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.BasicMoneyAccountDto
 import com.example.taxi.dolphin.model.dto.MoneyAccountDto
 import com.example.taxi.dolphin.model.enumerated.Currency
 import jakarta.persistence.*
@@ -24,8 +25,11 @@ open class MoneyAccountEntity {
     @Column(name = "balance")
     open var balance: Double = 0.0
 
-    @OneToMany(mappedBy = "moneyAccountEntity", cascade = [CascadeType.ALL], orphanRemoval = true)
-    open var paymentEntities: MutableSet<PaymentEntity> = mutableSetOf()
+    @OneToMany(mappedBy = "from", cascade = [CascadeType.ALL], orphanRemoval = true)
+    open var   fromPaymentEntities: MutableSet<PaymentEntity> = mutableSetOf()
+
+    @OneToMany(mappedBy = "to", cascade = [CascadeType.ALL], orphanRemoval = true)
+    open var toPaymentEntities: MutableSet<PaymentEntity> = mutableSetOf()
 
     @ManyToOne(cascade = [CascadeType.REFRESH])
     @JoinColumn(name = "account_entity_id")
@@ -50,6 +54,10 @@ open class MoneyAccountEntity {
 
 fun MoneyAccountEntity.toDto(): MoneyAccountDto = MoneyAccountDto(
     id, accountNumber, currency,
-    balance, paymentEntities.map { it.toDto() }.toMutableSet(),
-    accountEntity.toDto()
+    balance, fromPaymentEntities.map { it.toDto() }.toMutableSet(),
+    toPaymentEntities.map { it.toDto() }.toMutableSet(), accountEntity.toDto()
+)
+
+fun MoneyAccountEntity.toBasicDto(): BasicMoneyAccountDto = BasicMoneyAccountDto(
+    id,  accountNumber, currency
 )

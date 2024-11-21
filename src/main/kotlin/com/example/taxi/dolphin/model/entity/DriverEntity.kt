@@ -1,6 +1,8 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.BasicDriverDto
 import com.example.taxi.dolphin.model.dto.DriverDto
+import com.example.taxi.dolphin.model.dto.UserDto
 import com.example.taxi.dolphin.model.enumerated.AvailabilityStatus
 import jakarta.persistence.*
 
@@ -38,7 +40,13 @@ fun DriverEntity.toDto(): DriverDto = DriverDto(
     sex, title, phoneNumber, email,
     address, avatarLink, account.toDto(),
     experience, averageMonthlyNumberOfPassengers,
-    lastMonthWorkHours, tripEntities.map { it.toDto() },
-    carEntities.map { it.toDto() },
+    lastMonthWorkHours, tripEntities.map { it.toDto() }.toMutableSet(),
+    carEntities.map { it.toDto() }.toMutableSet(),
     combinedRatingEntity?.toDto()
+)
+
+fun DriverEntity.toBasicDto(): BasicDriverDto = BasicDriverDto(
+    UserDto(id, firstName, lastName, age, sex,
+        title, phoneNumber, email, address,
+        avatarLink, account.toDto()), experience
 )

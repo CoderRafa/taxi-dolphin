@@ -1,6 +1,8 @@
 package com.example.taxi.dolphin.model.dto
 
 import com.example.taxi.dolphin.model.entity.CarEntity
+import com.example.taxi.dolphin.model.entity.DriverEntity
+import com.example.taxi.dolphin.model.entity.LocationEntity
 import com.example.taxi.dolphin.model.enumerated.CarCategory
 import com.example.taxi.dolphin.model.enumerated.CarColor
 import com.fasterxml.jackson.annotation.JsonBackReference
@@ -17,17 +19,16 @@ data class CarDto(
     val category: CarCategory,
     val licencePlateNumber: String,
     val locationDto: LocationDto,
-    @JsonBackReference
     val driverDto: DriverDto
 ) : Serializable
 
-fun CarDto.toEntity(): CarEntity = CarEntity().apply {
-    id = this@toEntity.id
-    make = this@toEntity.make
-    model = this@toEntity.model
-    color = this@toEntity.color
-    category = this@toEntity.category
-    licencePlateNumber = this@toEntity.licencePlateNumber
-    locationEntity = this@toEntity.locationDto.toEntity()
-    driverEntity = this@toEntity.driverDto.toEntity()
+fun CarDto.toEntity(driverEntity: DriverEntity? = null, locationEntity: LocationEntity? = null): CarEntity = CarEntity().apply {
+    this.id = this@toEntity.id
+    this.make = this@toEntity.make
+    this.model = this@toEntity.model
+    this.color = this@toEntity.color
+    this.category = this@toEntity.category
+    this.licencePlateNumber = this@toEntity.licencePlateNumber
+    this.locationEntity = locationEntity ?: this@toEntity.locationDto.toEntity()
+    this.driverEntity = driverEntity ?: this@toEntity.driverDto.toEntity( )
 }

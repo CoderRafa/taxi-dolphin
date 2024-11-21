@@ -15,8 +15,8 @@ data class LocationDto(
 ) : Serializable
 
 fun LocationDto.toEntity(): LocationEntity = LocationEntity().apply {
-    id = this@toEntity.id
-    latitude = this@toEntity.latitude
-    longitude = this@toEntity.longitude
-    time = this@toEntity.time
+    this.id = this@toEntity.id
+    this.latitude = this@toEntity.latitude
+    this.longitude = this@toEntity.longitude
+    this.time = this@toEntity.time
 }

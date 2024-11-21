@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: ChangeUserAgeTypeToInt
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: age
+            tableName: user
+  - changeSet:
+      id: 1731436376523-2
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: age
+                  type: INT
+            tableName: user
+

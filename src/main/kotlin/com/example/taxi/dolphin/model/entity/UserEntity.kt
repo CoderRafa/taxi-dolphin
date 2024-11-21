@@ -24,8 +24,7 @@ open class UserEntity {
     open lateinit var lastName: String
 
     @Column(name = "age")
-    open lateinit var age: String
-
+    open var age: Int = 0
     @Enumerated(EnumType.STRING)
     @Column(name = "sex")
     open lateinit var sex: SexType

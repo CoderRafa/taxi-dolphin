@@ -1,5 +1,8 @@
 package com.example.taxi.dolphin.model.dto
 
+import com.example.taxi.dolphin.model.entity.DriverEntity
+import com.example.taxi.dolphin.model.entity.PassengerEntity
+import com.example.taxi.dolphin.model.entity.PaymentEntity
 import com.example.taxi.dolphin.model.entity.TripEntity
 import com.example.taxi.dolphin.model.enumerated.TripStatus
 import com.fasterxml.jackson.annotation.JsonBackReference
@@ -19,24 +22,27 @@ data class TripDto(
     val tripStatus: TripStatus,
     val price: Double = 0.0,
     val distance: Double = 0.0,
-    @JsonBackReference
     val driverDto: DriverDto,
-    @JsonManagedReference
     var ratings: List<RatingDto>,
-    @JsonBackReference
-    val passengerDto: PassengerDto
+    val passengerDto: PassengerDto,
+    val paymentDto: PaymentDto?
 ) : Serializable
 
-fun TripDto.toEntity(): TripEntity = TripEntity().apply {
-    id = this@toEntity.id
-    startTime = this@toEntity.startTime
-    finishTime = this@toEntity.finishTime
-    startPoint = this@toEntity.startPoint.toEntity()
-    endPoint = this@toEntity.endPoint.toEntity()
-    tripStatus = this@toEntity.tripStatus
-    price = this@toEntity.price
-    distance = this@toEntity.distance
-    driverEntity = this@toEntity.driverDto.toEntity()
-    ratingEntities = this@toEntity.ratings.map { it.toEntity() }.toMutableSet()
-    passengerEntity = this@toEntity.passengerDto.toEntity()
+fun TripDto.toEntity(
+    driverEntity: DriverEntity? = null,
+    passengerEntity: PassengerEntity? = null,
+    paymentEntity: PaymentEntity? = null
+): TripEntity = TripEntity().apply {
+    this.id = this@toEntity.id
+    this.startTime = this@toEntity.startTime
+    this.finishTime = this@toEntity.finishTime
+    this.startPoint = this@toEntity.startPoint.toEntity()
+    this.endPoint = this@toEntity.endPoint.toEntity()
+    this.tripStatus = this@toEntity.tripStatus
+    this.price = this@toEntity.price
+    this.distance = this@toEntity.distance
+    this.driverEntity = driverEntity ?: this@toEntity.driverDto.toEntity()
+    this.ratingEntities = this@toEntity.ratings.map { it.toEntity(this) }.toMutableSet()
+    this.passengerEntity = passengerEntity ?: this@toEntity.passengerDto.toEntity()
+    this.paymentEntity = paymentEntity ?: this@toEntity.paymentDto?.toEntity()
 }
