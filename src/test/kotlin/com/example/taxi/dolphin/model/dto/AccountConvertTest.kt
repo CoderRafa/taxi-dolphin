@@ -21,6 +21,7 @@ class AccountConvertTest {
             LocalDate.now(),
             AccountType.GOLD,
             5.0,
+            emptySet<MoneyAccountDto>().toMutableSet(),
             UserDto(
                 1,
                 "Jon",
@@ -32,8 +33,7 @@ class AccountConvertTest {
                 "j.carter@carter.com",
                 "troosldfl st.",
                 "http://testsd.com"
-            ),
-            emptySet<MoneyAccountDto>().toMutableSet()
+            )
         )
         val accountEntity = accountDto.toEntity()
         assertThat(accountEntity).isNotNull

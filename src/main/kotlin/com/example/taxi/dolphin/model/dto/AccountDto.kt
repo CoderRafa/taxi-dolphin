@@ -1,6 +1,7 @@
 package com.example.taxi.dolphin.model.dto
 
 import com.example.taxi.dolphin.model.entity.AccountEntity
+import com.example.taxi.dolphin.model.entity.MoneyAccountEntity
 import com.example.taxi.dolphin.model.entity.UserEntity
 import com.example.taxi.dolphin.model.enumerated.AccountType
 import com.fasterxml.jackson.annotation.JsonManagedReference
@@ -15,15 +16,15 @@ data class AccountDto(
     val registrationDate: LocalDate,
     val type: AccountType = AccountType.BASIC,
     val rating: Double? = null,
-    val user: UserDto,
-    val moneyAccounts: MutableSet<MoneyAccountDto> = mutableSetOf()
+    val moneyAccounts: MutableSet<MoneyAccountDto> = mutableSetOf(),
+    val user: UserDto? = null
 ) : Serializable
 
-fun AccountDto.toEntity(): AccountEntity = AccountEntity().apply {
+fun AccountDto.toEntity(user: UserEntity? = null, moneyAccountEntities: MutableSet<MoneyAccountEntity>? = null): AccountEntity = AccountEntity().apply {
     this.id = this@toEntity.id
     this.registrationDate = this@toEntity.registrationDate
     this.type = this@toEntity.type
     this.rating = this@toEntity.rating
-    this.user = this@toEntity.user.toEntity(this)
-    this.moneyAccountEntities = this@toEntity.moneyAccounts.map { it.toEntity(this) }.toMutableSet()
+    this.user = user ?: this@toEntity.user?.toEntity(this) ?: throw RuntimeException("The user has to be not null")
+    this.moneyAccountEntities = moneyAccountEntities ?: this@toEntity.moneyAccounts.map { it.toEntity(this) }.toMutableSet()
 }

@@ -4,15 +4,13 @@ import com.example.taxi.dolphin.model.entity.AccountEntity
 import com.example.taxi.dolphin.model.entity.UserEntity
 import com.example.taxi.dolphin.model.enumerated.SexType
 import com.example.taxi.dolphin.model.enumerated.Title
-import com.fasterxml.jackson.annotation.JsonBackReference
 import java.io.Serializable
-import java.lang.RuntimeException
 
 /**
  * DTO for {@link com.example.taxi.dolphin.model.entity.UserEntity}
  */
 open class UserDto(
-    val id: Long? = null,
+    var id: Long? = null,
     val firstName: String,
     val lastName: String,
     val age: Int,
@@ -21,9 +19,10 @@ open class UserDto(
     val phoneNumber: String,
     val email: String,
     val address: String,
-    val avatarLink: String,
-    val accountDto: AccountDto? = null
-) : Serializable
+    val avatarLink: String
+) : Serializable {
+    var accountDto: AccountDto? = null
+}
 
 fun UserDto.toEntity(accountEntity: AccountEntity? = null): UserEntity = UserEntity().apply {
     this.id = this@toEntity.id

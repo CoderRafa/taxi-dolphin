@@ -38,15 +38,15 @@ open class DriverEntity : UserEntity() {
 fun DriverEntity.toDto(): DriverDto = DriverDto(
     id, firstName, lastName, age,
     sex, title, phoneNumber, email,
-    address, avatarLink, account.toDto(),
+    address, avatarLink,
     experience, averageMonthlyNumberOfPassengers,
-    lastMonthWorkHours, tripEntities.map { it.toDto() }.toMutableSet(),
-    carEntities.map { it.toDto() }.toMutableSet(),
-    combinedRatingEntity?.toDto()
-)
+    lastMonthWorkHours
+).apply {
+    this.trips =
+}
 
 fun DriverEntity.toBasicDto(): BasicDriverDto = BasicDriverDto(
     UserDto(id, firstName, lastName, age, sex,
         title, phoneNumber, email, address,
-        avatarLink, account.toDto()), experience
+        avatarLink), experience
 )

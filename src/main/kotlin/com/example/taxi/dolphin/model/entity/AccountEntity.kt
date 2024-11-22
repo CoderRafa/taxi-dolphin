@@ -1,6 +1,7 @@
 package com.example.taxi.dolphin.model.entity
 
 import com.example.taxi.dolphin.model.dto.AccountDto
+import com.example.taxi.dolphin.model.dto.MoneyAccountDto
 import com.example.taxi.dolphin.model.dto.UserDto
 import com.example.taxi.dolphin.model.enumerated.AccountType
 import jakarta.persistence.*
@@ -32,9 +33,9 @@ open class AccountEntity {
     open var moneyAccountEntities: MutableSet<MoneyAccountEntity> = mutableSetOf()
 }
 
-fun AccountEntity.toDto(): AccountDto =
+fun AccountEntity.toDto(userDto: UserDto? = null, moneyAccountDtos: MutableSet<MoneyAccountDto>? = null): AccountDto =
     AccountDto(
         id, registrationDate, type, rating,
-        user.toDto(),
-        moneyAccountEntities.map { it.toDto() }.toMutableSet()
+        moneyAccountDtos ?: moneyAccountEntities.map { it.toDto() }.toMutableSet(),
+        userDto ?: user.toDto(),
         )

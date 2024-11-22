@@ -51,7 +51,7 @@ open class UserEntity {
 }
 
 fun UserEntity.toDto(): UserDto = UserDto(
-    id, firstName, lastName, age,
+    id!!, firstName, lastName, age,
     sex, title, phoneNumber, email,
-    address, avatarLink, account.toDto()
-)
+    address, avatarLink
+).apply { this.accountDto = account.toDto(this) }
