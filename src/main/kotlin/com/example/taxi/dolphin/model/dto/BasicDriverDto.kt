@@ -1,6 +1,7 @@
 package com.example.taxi.dolphin.model.dto
 
 import com.example.taxi.dolphin.model.entity.DriverEntity
+import java.lang.RuntimeException
 
 data class BasicDriverDto(
     val user: UserDto,
@@ -17,7 +18,7 @@ fun BasicDriverDto.toEntity(): DriverEntity = DriverEntity().apply {
     this.email = this@toEntity.user.email
     this.address = this@toEntity.user.address
     this.avatarLink = this@toEntity.user.avatarLink
-    this.account = this@toEntity.user.accountDto.toEntity()
+    this.account = this@toEntity.user.accountDto?.toEntity() ?: throw RuntimeException("The account has to be not null")
     this.experience = this@toEntity.experience
 
 }

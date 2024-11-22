@@ -22,7 +22,7 @@ open class UserDto(
     val email: String,
     val address: String,
     val avatarLink: String,
-    val accountDto: AccountDto
+    val accountDto: AccountDto? = null
 ) : Serializable
 
 fun UserDto.toEntity(accountEntity: AccountEntity? = null): UserEntity = UserEntity().apply {
@@ -36,5 +36,5 @@ fun UserDto.toEntity(accountEntity: AccountEntity? = null): UserEntity = UserEnt
     this.email = this@toEntity.email
     this.address = this@toEntity.address
     this.avatarLink  = this@toEntity.avatarLink
-    this.account = accountEntity ?: this@toEntity.accountDto.toEntity()
+    this.account = accountEntity ?: this@toEntity.accountDto?.toEntity() ?: throw RuntimeException("The account has to be not null")
 }

@@ -42,7 +42,7 @@ fun DriverDto.toEntity(accountEntity: AccountEntity? = null): DriverEntity = Dri
     this.email = this@toEntity.email
     this.address = this@toEntity.address
     this.avatarLink = this@toEntity.avatarLink
-    this.account = accountEntity ?: this@toEntity.accountDto.toEntity()
+    this.account = accountEntity ?: this@toEntity.accountDto?.toEntity() ?: throw RuntimeException("The account has to be not null")
     this.experience = this@toEntity.experience
     this.averageMonthlyNumberOfPassengers = this@toEntity.averageMonthlyNumberOfPassengers
     this.lastMonthWorkHours = this@toEntity.lastMonthWorkHours
