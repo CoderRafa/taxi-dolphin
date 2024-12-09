@@ -1,6 +1,8 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.CombinedRatingDto
 import com.example.taxi.dolphin.model.dto.PassengerDto
+import com.example.taxi.dolphin.model.dto.TripDto
 import jakarta.persistence.*
 
 @Entity
@@ -29,11 +31,23 @@ open class PassengerEntity : UserEntity() {
     open var combinedRatingEntity: CombinedRatingEntity? = null
 }
 
-fun PassengerEntity.toDto(): PassengerDto = PassengerDto(
-    id, firstName, lastName, age,
-    sex, title, phoneNumber, email,
-    address, avatarLink, account.toDto(),
-    miles, averageTip, generalComment,
-    favoriteRadioStation, tripEntities.map { it.toDto() },
-    combinedRatingEntity?.toDto()
-)
+fun PassengerEntity.toDto(
+    trips: MutableSet<TripDto>? = null,
+    combinedRating: CombinedRatingDto? = null
+): PassengerDto {
+    val passengerDto = PassengerDto(
+        this.id, this.firstName, this.lastName, this.age,
+        this.sex, this.title, this.phoneNumber, this.email,
+        this.address, this.avatarLink,
+        this.miles, this.averageTip, this.generalComment,
+        this.favoriteRadioStation,
+    )
+
+    val tripDtos = this.tripEntities.map { it.toDto() }
+        .takeIf { this.tripEntities.isNotEmpty() } ?: trips ?: emptySet()
+
+    passengerDto.trips.addAll(tripDtos)
+    passengerDto.combinedRatingDto = this.combinedRatingEntity?.toDto() ?: combinedRating
+
+    return passengerDto
+}

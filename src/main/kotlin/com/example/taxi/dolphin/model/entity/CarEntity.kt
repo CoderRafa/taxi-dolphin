@@ -32,9 +32,8 @@ open class CarEntity {
     @Column(name = "licence_plate_number", length = 10)
     open lateinit var licencePlateNumber: String
 
-    @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
-    @JoinColumn(name = "location_entity_id")
-    open lateinit var locationEntity: LocationEntity
+    @OneToMany(mappedBy = "carEntity", cascade = [CascadeType.ALL], orphanRemoval = true)
+    open var locationEntities: MutableSet<LocationEntity> = mutableSetOf()
 
     @ManyToOne(cascade = [CascadeType.REFRESH])
     @JoinColumn(name = "driver_entity_id")
@@ -57,8 +56,14 @@ open class CarEntity {
         if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass.hashCode() else javaClass.hashCode()
 }
 
-fun CarEntity.toDto(): CarDto = CarDto(
-    id, make, model, color,
-    category, licencePlateNumber,
-    locationEntity.toDto(), driverEntity.toDto()
-)
+fun CarEntity.toDto(): CarDto {
+    val carDto = CarDto(
+        this.id, this.make, this.model, this.color,
+        this.category, this.licencePlateNumber
+    )
+
+    carDto.locationDtos = this.locationEntities.map { it.toDto() }.toMutableSet()
+    carDto.driverDto = this.driverEntity.toDto()
+
+    return carDto
+}

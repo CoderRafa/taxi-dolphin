@@ -21,6 +21,10 @@ open class LocationEntity {
 
     @Column(name = "time")
     open lateinit var time: LocalDateTime
+
+    @ManyToOne(cascade = [CascadeType.REFRESH])
+    @JoinColumn(name = "car_entity_id")
+    open var carEntity: CarEntity? = null
 }
 
 fun LocationEntity.toDto(): LocationDto = LocationDto(

@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.dto
 
+import com.example.taxi.dolphin.exception.PropertyShouldBeNotNullException
 import com.example.taxi.dolphin.model.entity.RatingEntity
 import com.example.taxi.dolphin.model.entity.TripEntity
 import com.example.taxi.dolphin.model.enumerated.Review
@@ -13,16 +14,20 @@ data class RatingDto(
     val id: Long? = null,
     val byWhom: Long? = null,
     val forWhom: Long? = null,
-    val givenRating: Review? = null,
     val comment: String? = null,
-    val tripDto: TripDto
-) : Serializable
+) : Serializable {
+    var givenRating: Review? = null
+    lateinit var tripDto: TripDto
+}
 
-fun RatingDto.toEntity(tripEntity: TripEntity? = null): RatingEntity = RatingEntity().apply {
+fun RatingDto.toEntity(
+    givenRating: Review? = null,
+    tripEntity: TripEntity? = null
+    ): RatingEntity = RatingEntity().apply {
     this.id = this@toEntity.id
     this.byWhom = this@toEntity.byWhom
     this.forWhom = this@toEntity.forWhom
-    this.givenRating = this@toEntity.givenRating
+    this.givenRating = givenRating ?: this@toEntity.givenRating ?: throw PropertyShouldBeNotNullException("The givenRating has to be not null")
     this.comment = this@toEntity.comment
-    this.tripEntity = tripEntity ?:  this@toEntity.tripDto.toEntity()
+    this.tripEntity = tripEntity ?: this@toEntity.tripDto.toEntity()
 }

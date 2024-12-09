@@ -1,5 +1,7 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.PaymentDto
+import com.example.taxi.dolphin.model.dto.RatingDto
 import com.example.taxi.dolphin.model.dto.TripDto
 import com.example.taxi.dolphin.model.enumerated.TripStatus
 import jakarta.persistence.*
@@ -70,10 +72,20 @@ open class TripEntity {
         if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass.hashCode() else javaClass.hashCode()
 }
 
-fun TripEntity.toDto(): TripDto = TripDto(
-    id, startTime, finishTime,
-    startPoint.toDto(), endPoint.toDto(),
-    tripStatus, price, distance,
-    driverEntity.toDto(), ratingEntities.map { it.toDto() },
-    passengerEntity.toDto(), paymentEntity?.toDto()
-)
+fun TripEntity.toDto(ratings: MutableSet<RatingDto>? = null, payment: PaymentDto? = null): TripDto {
+    val tripDto = TripDto(
+        this.id, this.startTime, this.finishTime,
+        this.tripStatus, this.price, this.distance
+    )
+
+    tripDto.startPoint = this.startPoint.toDto()
+    tripDto.endPoint = this.endPoint.toDto()
+    tripDto.driverDto = this.driverEntity.toDto()
+    val ratingDtos = this.ratingEntities.map { it.toDto() }
+        .takeIf { this.ratingEntities.isNotEmpty() } ?: ratings ?: emptySet()
+    tripDto.ratings.addAll(ratingDtos)
+    tripDto.passengerDto = this.passengerEntity.toDto()
+    tripDto.paymentDto = this.paymentEntity?.toDto() ?: payment
+
+    return tripDto
+}

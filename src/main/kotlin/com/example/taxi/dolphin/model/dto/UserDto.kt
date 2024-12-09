@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.dto
 
+import com.example.taxi.dolphin.exception.PropertyShouldBeNotNullException
 import com.example.taxi.dolphin.model.entity.AccountEntity
 import com.example.taxi.dolphin.model.entity.UserEntity
 import com.example.taxi.dolphin.model.enumerated.SexType
@@ -35,5 +36,7 @@ fun UserDto.toEntity(accountEntity: AccountEntity? = null): UserEntity = UserEnt
     this.email = this@toEntity.email
     this.address = this@toEntity.address
     this.avatarLink  = this@toEntity.avatarLink
-    this.account = accountEntity ?: this@toEntity.accountDto?.toEntity() ?: throw RuntimeException("The account has to be not null")
+
+    this.account?.user = this
+    this.account = accountEntity ?: this@toEntity.accountDto?.toEntity(this) ?: throw PropertyShouldBeNotNullException("The account has to be not null")
 }

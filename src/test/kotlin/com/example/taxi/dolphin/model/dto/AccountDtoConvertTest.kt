@@ -3,7 +3,6 @@ package com.example.taxi.dolphin.model.dto
 import com.example.taxi.dolphin.model.enumerated.AccountType
 import com.example.taxi.dolphin.model.enumerated.SexType
 import com.example.taxi.dolphin.model.enumerated.Title
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension
 import java.time.LocalDate
 
 @ExtendWith(MockitoExtension::class)
-class AccountConvertTest {
+class AccountDtoConvertTest {
 
     @Test
     fun `Happy pass - success conversion a dto to the entity`() {
@@ -20,20 +19,19 @@ class AccountConvertTest {
             1,
             LocalDate.now(),
             AccountType.GOLD,
-            5.0,
-            emptySet<MoneyAccountDto>().toMutableSet(),
-            UserDto(
-                1,
-                "Jon",
-                "Carter",
-                10,
-                SexType.MALE,
-                Title.MR,
-                "+192988384834903",
-                "j.carter@carter.com",
-                "troosldfl st.",
-                "http://testsd.com"
-            )
+            5.0
+        )
+        accountDto.user = UserDto(
+            1,
+            "Andrei",
+            "Sokolov",
+            27,
+            SexType.MALE,
+            Title.MR,
+            "+359888765432",
+            "andrei@gmail.com",
+            "First st. 1",
+            "https://www.link.com"
         )
         val accountEntity = accountDto.toEntity()
         assertThat(accountEntity).isNotNull

@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.dto
 
+import com.example.taxi.dolphin.exception.PropertyShouldBeNotNullException
 import com.example.taxi.dolphin.model.entity.AccountEntity
 import com.example.taxi.dolphin.model.entity.MoneyAccountEntity
 import com.example.taxi.dolphin.model.entity.UserEntity
@@ -15,16 +16,19 @@ data class AccountDto(
     val id: Long? = null,
     val registrationDate: LocalDate,
     val type: AccountType = AccountType.BASIC,
-    val rating: Double? = null,
-    val moneyAccounts: MutableSet<MoneyAccountDto> = mutableSetOf(),
-    val user: UserDto? = null
-) : Serializable
+    val rating: Double? = null
+) : Serializable {
+    val moneyAccounts: MutableSet<MoneyAccountDto> = mutableSetOf()
+    var user: UserDto? = null
+}
 
-fun AccountDto.toEntity(user: UserEntity? = null, moneyAccountEntities: MutableSet<MoneyAccountEntity>? = null): AccountEntity = AccountEntity().apply {
+fun AccountDto.toEntity(user: UserEntity? = null, moneyAccounts: MutableSet<MoneyAccountEntity>? = null): AccountEntity = AccountEntity().apply {
     this.id = this@toEntity.id
     this.registrationDate = this@toEntity.registrationDate
     this.type = this@toEntity.type
     this.rating = this@toEntity.rating
-    this.user = user ?: this@toEntity.user?.toEntity(this) ?: throw RuntimeException("The user has to be not null")
-    this.moneyAccountEntities = moneyAccountEntities ?: this@toEntity.moneyAccounts.map { it.toEntity(this) }.toMutableSet()
+    this.moneyAccountEntities = moneyAccounts ?: this@toEntity.moneyAccounts.map { it.toEntity(this) }.toMutableSet() ?: mutableSetOf<MoneyAccountEntity>()
+
+    this.user.account = this
+    this.user = user ?: this@toEntity.user?.toEntity(this) ?: throw PropertyShouldBeNotNullException("The user has to be not null")
 }

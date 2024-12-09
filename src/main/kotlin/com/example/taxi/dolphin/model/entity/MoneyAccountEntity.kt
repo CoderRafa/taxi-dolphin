@@ -1,7 +1,9 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.AccountDto
 import com.example.taxi.dolphin.model.dto.BasicMoneyAccountDto
 import com.example.taxi.dolphin.model.dto.MoneyAccountDto
+import com.example.taxi.dolphin.model.dto.PaymentDto
 import com.example.taxi.dolphin.model.enumerated.Currency
 import jakarta.persistence.*
 import org.hibernate.proxy.HibernateProxy
@@ -26,7 +28,7 @@ open class MoneyAccountEntity {
     open var balance: Double = 0.0
 
     @OneToMany(mappedBy = "from", cascade = [CascadeType.ALL], orphanRemoval = true)
-    open var   fromPaymentEntities: MutableSet<PaymentEntity> = mutableSetOf()
+    open var fromPaymentEntities: MutableSet<PaymentEntity> = mutableSetOf()
 
     @OneToMany(mappedBy = "to", cascade = [CascadeType.ALL], orphanRemoval = true)
     open var toPaymentEntities: MutableSet<PaymentEntity> = mutableSetOf()
@@ -52,12 +54,26 @@ open class MoneyAccountEntity {
         if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass.hashCode() else javaClass.hashCode()
 }
 
-fun MoneyAccountEntity.toDto(): MoneyAccountDto = MoneyAccountDto(
-    id, accountNumber, currency,
-    balance, fromPaymentEntities.map { it.toDto() }.toMutableSet(),
-    toPaymentEntities.map { it.toDto() }.toMutableSet(), accountEntity.toDto()
-)
+fun MoneyAccountEntity.toDto(
+    fromPaymentEntities: MutableSet<PaymentDto>? = null,
+    toPaymentEntities: MutableSet<PaymentDto>? = null,
+): MoneyAccountDto {
+
+    val moneyAccountDto = MoneyAccountDto(id, accountNumber, currency, balance)
+
+    val fromPayments = this.fromPaymentEntities.map { it.toDto() }
+        .takeIf { this.fromPaymentEntities.isNotEmpty() } ?: fromPaymentEntities ?: emptySet()
+
+    val toPayments = this.toPaymentEntities.map { it.toDto() }
+        .takeIf { this.toPaymentEntities.isNotEmpty() } ?: toPaymentEntities ?: emptySet()
+
+    moneyAccountDto.fromPayments.addAll(fromPayments)
+    moneyAccountDto.toPayments.addAll(toPayments)
+    moneyAccountDto.accountDto = this.accountEntity.toDto()
+
+    return moneyAccountDto
+}
 
 fun MoneyAccountEntity.toBasicDto(): BasicMoneyAccountDto = BasicMoneyAccountDto(
-    id,  accountNumber, currency
+    id, accountNumber, currency
 )

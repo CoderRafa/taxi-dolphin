@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.dto
 
+import com.example.taxi.dolphin.exception.PropertyShouldBeNotNullException
 import com.example.taxi.dolphin.model.entity.CarEntity
 import com.example.taxi.dolphin.model.entity.DriverEntity
 import com.example.taxi.dolphin.model.entity.LocationEntity
@@ -17,18 +18,19 @@ data class CarDto(
     val model: String,
     val color: CarColor,
     val category: CarCategory,
-    val licencePlateNumber: String,
-    val locationDto: LocationDto,
-    val driverDto: DriverDto
-) : Serializable
+    val licencePlateNumber: String
+) : Serializable {
+    lateinit var locationDtos: MutableSet<LocationDto>
+    lateinit var driverDto: DriverDto
+}
 
-fun CarDto.toEntity(driverEntity: DriverEntity? = null, locationEntity: LocationEntity? = null): CarEntity = CarEntity().apply {
+fun CarDto.toEntity(driverEntity: DriverEntity? = null, locationEntities: MutableSet<LocationEntity>? = null): CarEntity = CarEntity().apply {
     this.id = this@toEntity.id
     this.make = this@toEntity.make
     this.model = this@toEntity.model
     this.color = this@toEntity.color
     this.category = this@toEntity.category
     this.licencePlateNumber = this@toEntity.licencePlateNumber
-    this.locationEntity = locationEntity ?: this@toEntity.locationDto.toEntity()
-    this.driverEntity = driverEntity ?: this@toEntity.driverDto.toEntity( )
+    this.locationEntities = locationEntities ?: this@toEntity.locationDtos.map { it.toEntity() }.toMutableSet()
+    this.driverEntity = driverEntity ?: this@toEntity.driverDto.toEntity(cars = mutableSetOf(this))
 }

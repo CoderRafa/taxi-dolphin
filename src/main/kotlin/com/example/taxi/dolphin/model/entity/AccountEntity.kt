@@ -2,7 +2,6 @@ package com.example.taxi.dolphin.model.entity
 
 import com.example.taxi.dolphin.model.dto.AccountDto
 import com.example.taxi.dolphin.model.dto.MoneyAccountDto
-import com.example.taxi.dolphin.model.dto.UserDto
 import com.example.taxi.dolphin.model.enumerated.AccountType
 import jakarta.persistence.*
 import java.time.LocalDate
@@ -33,9 +32,12 @@ open class AccountEntity {
     open var moneyAccountEntities: MutableSet<MoneyAccountEntity> = mutableSetOf()
 }
 
-fun AccountEntity.toDto(userDto: UserDto? = null, moneyAccountDtos: MutableSet<MoneyAccountDto>? = null): AccountDto =
-    AccountDto(
-        id, registrationDate, type, rating,
-        moneyAccountDtos ?: moneyAccountEntities.map { it.toDto() }.toMutableSet(),
-        userDto ?: user.toDto(),
-        )
+fun AccountEntity.toDto(moneyAccounts: MutableSet<MoneyAccountDto>? = null): AccountDto {
+    val accountDto = AccountDto(this.id, this.registrationDate, this.type, this.rating)
+    val moneyAccountDtos = this.moneyAccountEntities.map { it.toDto() } // TODO: Check MoneyAccountEntity.toDto()
+        .takeIf { this.moneyAccountEntities.isNotEmpty() } ?: moneyAccounts ?: emptySet()
+    accountDto.moneyAccounts.addAll(moneyAccountDtos) // Q. Shouldn't we make it to MutableSet()\
+    accountDto.user = this.user.toDto() // TODO: Check UserEntity.toDto()
+    return accountDto
+}
+

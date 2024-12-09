@@ -48,8 +48,13 @@ open  class RatingEntity {
         if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass.hashCode() else javaClass.hashCode()
 }
 
-fun RatingEntity.toDto(): RatingDto =RatingDto(
-    id, byWhom, forWhom,
-    givenRating, comment,
-    tripEntity.toDto()
-)
+fun RatingEntity.toDto(): RatingDto {
+    val ratingDto = RatingDto(
+        this.id, this.byWhom, this.forWhom,
+        this.comment
+    )
+
+    ratingDto.tripDto = this.tripEntity.toDto()
+
+    return ratingDto
+}

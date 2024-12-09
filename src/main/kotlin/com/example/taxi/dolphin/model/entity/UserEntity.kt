@@ -1,5 +1,6 @@
 package com.example.taxi.dolphin.model.entity
 
+import com.example.taxi.dolphin.model.dto.AccountDto
 import com.example.taxi.dolphin.model.dto.UserDto
 import com.example.taxi.dolphin.model.enumerated.SexType
 import com.example.taxi.dolphin.model.enumerated.Title
@@ -47,11 +48,17 @@ open class UserEntity {
 
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "account_entity_id")
-    open lateinit var account: AccountEntity
+    open var account: AccountEntity? = null
 }
 
-fun UserEntity.toDto(): UserDto = UserDto(
-    id!!, firstName, lastName, age,
-    sex, title, phoneNumber, email,
-    address, avatarLink
-).apply { this.accountDto = account.toDto(this) }
+fun UserEntity.toDto(accountDto: AccountDto? = null): UserDto {
+    val userDto = UserDto(
+        this.id, this.firstName, this.lastName, this.age,
+        this.sex, this.title, this.phoneNumber, this.email,
+        this.address, this.avatarLink
+    )
+
+    userDto.accountDto = this.account?.toDto() ?: accountDto
+
+    return userDto
+}

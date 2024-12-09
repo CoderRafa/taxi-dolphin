@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: AddCarColumnToLocation
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: car_entity_id
+                  type: BIGINT
+            tableName: location
+  - changeSet:
+      id: AddForeignKeyForCarColumnInLocation
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: car_entity_id
+            baseTableName: location
+            constraintName: FK_LOCATION_ON_CAR_ENTITY
+            referencedColumnNames: id
+            referencedTableName: car
+  - changeSet:
+      id: 1733297878313-3
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: car
+            constraintName: fk_car_on_location_entity
+  - changeSet:
+      id: 1733297878313-4
+      author: Rafa (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: location_entity_id
+            tableName: car
+

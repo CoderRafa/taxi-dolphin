@@ -1,11 +1,9 @@
 package com.example.taxi.dolphin.model.dto
 
-import com.example.taxi.dolphin.model.entity.AccountEntity
-import com.example.taxi.dolphin.model.entity.DriverEntity
+import com.example.taxi.dolphin.exception.PropertyShouldBeNotNullException
+import com.example.taxi.dolphin.model.entity.*
 import com.example.taxi.dolphin.model.enumerated.SexType
 import com.example.taxi.dolphin.model.enumerated.Title
-import com.fasterxml.jackson.annotation.JsonManagedReference
-import java.io.Serializable
 import java.lang.RuntimeException
 
 /**
@@ -26,12 +24,17 @@ class DriverDto(
     val averageMonthlyNumberOfPassengers: Double? = null,
     val lastMonthWorkHours: Double? = null
 ) : UserDto(id, firstName, lastName, age, sex, title, phoneNumber, email, address, avatarLink) {
-    val trips: MutableSet<TripDto> = mutableSetOf()
-    val cars: MutableSet<CarDto> = mutableSetOf()
-    val combinedRatingDto: CombinedRatingDto? = null
+    var trips: MutableSet<TripDto> = mutableSetOf()
+    var cars: MutableSet<CarDto> = mutableSetOf()
+    var combinedRatingDto: CombinedRatingDto? = null
 }
 
-fun DriverDto.toEntity(accountEntity: AccountEntity? = null): DriverEntity = DriverEntity().apply {
+fun DriverDto.toEntity(
+    accountEntity: AccountEntity? = null,
+    trips: MutableSet<TripEntity>? = null,
+    cars: MutableSet<CarEntity>? = null,
+    combinedRating: CombinedRatingEntity? = null
+    ): DriverEntity = DriverEntity().apply {
     this.id = this@toEntity.id
     this.firstName = this@toEntity.firstName
     this.lastName = this@toEntity.lastName
@@ -45,10 +48,10 @@ fun DriverDto.toEntity(accountEntity: AccountEntity? = null): DriverEntity = Dri
     this.experience = this@toEntity.experience
     this.averageMonthlyNumberOfPassengers = this@toEntity.averageMonthlyNumberOfPassengers
     this.lastMonthWorkHours = this@toEntity.lastMonthWorkHours
-    this.tripEntities = this@toEntity.trips.map { it.toEntity(this) }.toMutableSet()
-    this.carEntities = this@toEntity.cars.map { it.toEntity(this) }.toMutableSet()
-    this.combinedRatingEntity = this@toEntity.combinedRatingDto?.toEntity()
+    this.tripEntities = trips ?: this@toEntity.trips.map { it.toEntity(driverEntity = this) }.toMutableSet()
+    this.carEntities = cars ?: this@toEntity.cars.map { it.toEntity(this) }.toMutableSet()
+    this.combinedRatingEntity = combinedRating ?: this@toEntity.combinedRatingDto?.toEntity()
 
-    this.account.user = this
-    this.account = accountEntity ?: this@toEntity.accountDto?.toEntity() ?: throw RuntimeException("The account has to be not null")
+    this.account?.user = this
+    this.account = accountEntity ?: this@toEntity.accountDto?.toEntity() ?: throw PropertyShouldBeNotNullException("The account has to be not null")
 }

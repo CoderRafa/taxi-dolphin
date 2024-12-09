@@ -60,8 +60,15 @@ open class PaymentEntity {
         if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass.hashCode() else javaClass.hashCode()
 }
 
-fun PaymentEntity.toDto():PaymentDto = PaymentDto(
-    id, amount, createdDate, confirmedDate,
-    purpose, paymentStatus, from.toDto(),
-    to.toDto(), tripEntity.toDto()
-)
+fun PaymentEntity.toDto():PaymentDto {
+    val paymentDto = PaymentDto(
+        this.id, this.amount, this.createdDate, this.confirmedDate,
+        this.purpose, this.paymentStatus
+    )
+
+    paymentDto.from = this.from.toDto()
+    paymentDto.to = this.to.toDto()
+    paymentDto.tripDto = this.tripEntity.toDto()
+
+    return paymentDto
+}
