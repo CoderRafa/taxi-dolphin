@@ -1,11 +1,9 @@
 package com.example.taxi.dolphin.model.dto
 
-import com.example.taxi.dolphin.exception.PropertyShouldBeNotNullException
 import com.example.taxi.dolphin.model.entity.AccountEntity
 import com.example.taxi.dolphin.model.entity.MoneyAccountEntity
 import com.example.taxi.dolphin.model.entity.UserEntity
 import com.example.taxi.dolphin.model.enumerated.AccountType
-import com.fasterxml.jackson.annotation.JsonManagedReference
 import java.io.Serializable
 import java.time.LocalDate
 
