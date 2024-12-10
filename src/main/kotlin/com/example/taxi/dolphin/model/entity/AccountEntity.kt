@@ -34,10 +34,10 @@ open class AccountEntity {
 
 fun AccountEntity.toDto(moneyAccounts: MutableSet<MoneyAccountDto>? = null): AccountDto {
     val accountDto = AccountDto(this.id, this.registrationDate, this.type, this.rating)
-    val moneyAccountDtos = this.moneyAccountEntities.map { it.toDto() } // TODO: Check MoneyAccountEntity.toDto()
+    val moneyAccountDtos = this.moneyAccountEntities.map { it.toDto() }
         .takeIf { this.moneyAccountEntities.isNotEmpty() } ?: moneyAccounts ?: emptySet()
-    accountDto.moneyAccounts.addAll(moneyAccountDtos) // Q. Shouldn't we make it to MutableSet()\
-    accountDto.user = this.user.toDto() // TODO: Check UserEntity.toDto()
+    accountDto.moneyAccounts.addAll(moneyAccountDtos)
+    accountDto.user = this.user.toDto()
     return accountDto
 }
 
