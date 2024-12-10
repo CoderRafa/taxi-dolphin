@@ -58,7 +58,7 @@ fun UserEntity.toDto(accountDto: AccountDto? = null): UserDto {
         this.address, this.avatarLink
     )
 
-    userDto.accountDto = this.account?.toDto() ?: accountDto
+    userDto.accountDto = accountDto ?: this.account?.toDto(userDto)
 
     return userDto
 }

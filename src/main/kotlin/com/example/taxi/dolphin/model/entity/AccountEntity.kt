@@ -2,6 +2,7 @@ package com.example.taxi.dolphin.model.entity
 
 import com.example.taxi.dolphin.model.dto.AccountDto
 import com.example.taxi.dolphin.model.dto.MoneyAccountDto
+import com.example.taxi.dolphin.model.dto.UserDto
 import com.example.taxi.dolphin.model.enumerated.AccountType
 import jakarta.persistence.*
 import java.time.LocalDate
@@ -32,12 +33,12 @@ open class AccountEntity {
     open var moneyAccountEntities: MutableSet<MoneyAccountEntity> = mutableSetOf()
 }
 
-fun AccountEntity.toDto(moneyAccounts: MutableSet<MoneyAccountDto>? = null): AccountDto {
+fun AccountEntity.toDto(userDto: UserDto? = null, moneyAccounts: MutableSet<MoneyAccountDto>? = null): AccountDto {
     val accountDto = AccountDto(this.id, this.registrationDate, this.type, this.rating)
-    val moneyAccountDtos = this.moneyAccountEntities.map { it.toDto() }
-        .takeIf { this.moneyAccountEntities.isNotEmpty() } ?: moneyAccounts ?: emptySet()
+    val moneyAccountDtos = moneyAccounts ?: this.moneyAccountEntities.map { it.toDto() }
+        .takeIf { this.moneyAccountEntities.isNotEmpty() } ?: emptySet()
     accountDto.moneyAccounts.addAll(moneyAccountDtos)
-    accountDto.user = this.user.toDto()
+    accountDto.user = userDto ?: this.user.toDto(accountDto)
     return accountDto
 }
 
