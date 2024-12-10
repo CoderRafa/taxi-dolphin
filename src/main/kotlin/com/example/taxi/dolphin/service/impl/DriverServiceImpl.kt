@@ -3,6 +3,7 @@ package com.example.taxi.dolphin.service.impl
 import com.example.taxi.dolphin.model.dto.DriverDto
 import com.example.taxi.dolphin.model.dto.RatingDto
 import com.example.taxi.dolphin.model.dto.toEntity
+import com.example.taxi.dolphin.model.entity.AccountEntity
 import com.example.taxi.dolphin.model.entity.toDto
 import com.example.taxi.dolphin.repository.DriverRepository
 import com.example.taxi.dolphin.service.DriverService
@@ -15,7 +16,10 @@ class DriverServiceImpl(private val driverRepository: DriverRepository): DriverS
     private val log = LoggerFactory.getLogger(DriverServiceImpl::class.java)
     override fun save(driverDto: DriverDto): DriverDto {
         log.debug("Create a new driver with name {}", driverDto.firstName)
-        return driverRepository.save(driverDto.toEntity()).toDto()
+        val driverEntity = driverDto.toEntity()
+        val accountEntity = AccountEntity().apply { this.user = driverEntity }
+        driverEntity.account = accountEntity
+        return driverRepository.save(driverEntity).toDto()
     }
 
     override fun setAvailability(id: Long): DriverDto {

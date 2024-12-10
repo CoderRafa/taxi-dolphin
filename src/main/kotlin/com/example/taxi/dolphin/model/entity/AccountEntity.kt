@@ -16,14 +16,14 @@ open class AccountEntity {
     open var id: Long? = null
 
     @Column(name = "registration_date")
-    open lateinit var registrationDate: LocalDate
+    open var registrationDate: LocalDate = LocalDate.now()
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     open var type: AccountType = AccountType.BASIC
 
     @Column(name = "rating")
-    open var rating: Double? = null
+    open var rating: Double = 0.0
 
     @OneToOne(mappedBy = "account", cascade = [CascadeType.ALL], orphanRemoval = true)
     open lateinit var user: UserEntity

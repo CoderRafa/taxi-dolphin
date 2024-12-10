@@ -30,10 +30,7 @@ class DriverDto(
 }
 
 fun DriverDto.toEntity(
-    accountEntity: AccountEntity? = null,
-    trips: MutableSet<TripEntity>? = null,
     cars: MutableSet<CarEntity>? = null,
-    combinedRating: CombinedRatingEntity? = null
     ): DriverEntity = DriverEntity().apply {
     this.id = this@toEntity.id
     this.firstName = this@toEntity.firstName
@@ -48,10 +45,5 @@ fun DriverDto.toEntity(
     this.experience = this@toEntity.experience
     this.averageMonthlyNumberOfPassengers = this@toEntity.averageMonthlyNumberOfPassengers
     this.lastMonthWorkHours = this@toEntity.lastMonthWorkHours
-    this.tripEntities = trips ?: this@toEntity.trips.map { it.toEntity(driverEntity = this) }.toMutableSet()
     this.carEntities = cars ?: this@toEntity.cars.map { it.toEntity(this) }.toMutableSet()
-    this.combinedRatingEntity = combinedRating ?: this@toEntity.combinedRatingDto?.toEntity()
-
-    this.account?.user = this
-    this.account = accountEntity ?: this@toEntity.accountDto?.toEntity() ?: throw PropertyShouldBeNotNullException("The account has to be not null")
 }
