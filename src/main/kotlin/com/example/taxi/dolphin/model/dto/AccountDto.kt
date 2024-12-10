@@ -26,7 +26,7 @@ fun AccountDto.toEntity(user: UserEntity? = null, moneyAccounts: MutableSet<Mone
     this.id = this@toEntity.id
     this.registrationDate = this@toEntity.registrationDate
     this.type = this@toEntity.type
-    this.rating = this@toEntity.rating
+    this.rating = this@toEntity.rating ?: 0.0
     this.moneyAccountEntities = moneyAccounts ?: this@toEntity.moneyAccounts.map { it.toEntity(this) }.toMutableSet() ?: mutableSetOf<MoneyAccountEntity>()
 
     this.user.account = this
