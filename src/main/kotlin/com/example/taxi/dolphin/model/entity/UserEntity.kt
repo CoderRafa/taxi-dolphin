@@ -7,7 +7,7 @@ import com.example.taxi.dolphin.model.enumerated.Title
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "user")
+@Table(name = "taxi_dolphin_user")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "who", discriminatorType = DiscriminatorType.STRING, length = 50)
 
