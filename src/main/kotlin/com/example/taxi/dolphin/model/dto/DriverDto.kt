@@ -1,32 +1,32 @@
 package com.example.taxi.dolphin.model.dto
 
-import com.example.taxi.dolphin.exception.PropertyShouldBeNotNullException
-import com.example.taxi.dolphin.model.entity.*
+import com.example.taxi.dolphin.model.entity.CarEntity
+import com.example.taxi.dolphin.model.entity.DriverEntity
 import com.example.taxi.dolphin.model.enumerated.SexType
 import com.example.taxi.dolphin.model.enumerated.Title
-import java.lang.RuntimeException
 
 /**
  * DTO for {@link com.example.taxi.dolphin.model.entity.DriverEntity}
  */
 class DriverDto(
-    id: Long? = null,
-    firstName: String,
-    lastName: String,
-    age: Int,
-    sex: SexType,
-    title: Title,
-    phoneNumber: String,
-    email: String,
-    address: String,
-    avatarLink: String,
+    val id: Long? = null,
+    val firstName: String,
+    val lastName: String,
+    val age: Int,
+    val sex: SexType,
+    val title: Title,
+    val phoneNumber: String,
+    val email: String,
+    val address: String,
+    val avatarLink: String,
     val experience: Int? = null,
     val averageMonthlyNumberOfPassengers: Double? = null,
-    val lastMonthWorkHours: Double? = null
-) : UserDto(id, firstName, lastName, age, sex, title, phoneNumber, email, address, avatarLink) {
+    val lastMonthWorkHours: Double? = null,
+    var cars: MutableSet<CarDto>? = mutableSetOf()
+) {
     var trips: MutableSet<TripDto> = mutableSetOf()
-    var cars: MutableSet<CarDto> = mutableSetOf()
     var combinedRatingDto: CombinedRatingDto? = null
+    lateinit var account: AccountDto
 }
 
 fun DriverDto.toEntity(
@@ -45,5 +45,5 @@ fun DriverDto.toEntity(
     this.experience = this@toEntity.experience
     this.averageMonthlyNumberOfPassengers = this@toEntity.averageMonthlyNumberOfPassengers
     this.lastMonthWorkHours = this@toEntity.lastMonthWorkHours
-    this.carEntities = cars ?: this@toEntity.cars.map { it.toEntity(this) }.toMutableSet()
+    this.carEntities = cars ?: this@toEntity.cars?.map { it.toEntity(this) }?.toMutableSet() ?: mutableSetOf()
 }

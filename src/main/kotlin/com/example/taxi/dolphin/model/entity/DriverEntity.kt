@@ -47,7 +47,7 @@ fun DriverEntity.toDto(
         this.lastMonthWorkHours
     )
 
-    driverDto.accountDto = this.account?.toDto() ?: account
+    driverDto.account = account ?: this.account.toDto()
 
     val tripDtos = this.tripEntities.map { it.toDto() }
         .takeIf { this.tripEntities.isNotEmpty() } ?: trips ?: emptySet()
@@ -55,7 +55,7 @@ fun DriverEntity.toDto(
 
     val carDtos = this.carEntities.map { it.toDto() }
         .takeIf { this.carEntities.isNotEmpty() } ?: cars ?: emptySet()
-    driverDto.cars.addAll(carDtos)
+    driverDto.cars?.addAll(carDtos)
 
     driverDto.combinedRatingDto = this.combinedRatingEntity?.toDto() ?: combinedRating
 

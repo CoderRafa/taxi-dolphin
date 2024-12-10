@@ -19,7 +19,6 @@ data class AccountDto(
     val rating: Double? = null
 ) : Serializable {
     val moneyAccounts: MutableSet<MoneyAccountDto> = mutableSetOf()
-    var user: UserDto? = null
 }
 
 fun AccountDto.toEntity(user: UserEntity? = null, moneyAccounts: MutableSet<MoneyAccountEntity>? = null): AccountEntity = AccountEntity().apply {
@@ -28,7 +27,4 @@ fun AccountDto.toEntity(user: UserEntity? = null, moneyAccounts: MutableSet<Mone
     this.type = this@toEntity.type
     this.rating = this@toEntity.rating ?: 0.0
     this.moneyAccountEntities = moneyAccounts ?: this@toEntity.moneyAccounts.map { it.toEntity(this) }.toMutableSet() ?: mutableSetOf<MoneyAccountEntity>()
-
-    this.user.account = this
-    this.user = user ?: this@toEntity.user?.toEntity(this) ?: throw PropertyShouldBeNotNullException("The user has to be not null")
 }

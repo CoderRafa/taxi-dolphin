@@ -48,7 +48,7 @@ open class UserEntity {
 
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "account_entity_id")
-    open var account: AccountEntity? = null
+    open lateinit var account: AccountEntity
 }
 
 fun UserEntity.toDto(accountDto: AccountDto? = null): UserDto {
