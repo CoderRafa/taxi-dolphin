@@ -38,7 +38,6 @@ fun AccountEntity.toDto(userDto: UserDto? = null, moneyAccounts: MutableSet<Mone
     val moneyAccountDtos = moneyAccounts ?: this.moneyAccountEntities.map { it.toDto() }
         .takeIf { this.moneyAccountEntities.isNotEmpty() } ?: emptySet()
     accountDto.moneyAccounts.addAll(moneyAccountDtos)
-    accountDto.user = userDto ?: this.user.toDto(accountDto)
     return accountDto
 }
 
